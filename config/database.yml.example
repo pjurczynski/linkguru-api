@@ -1,0 +1,19 @@
+defaults: &defaults
+  adapter: postgresql
+  encoding: utf8
+  pool: 5
+  timeout: 5000
+  username: linkguru
+  password:
+
+development:
+  <<: *defaults
+  database: linkguru_development
+
+test: &test
+  <<: *defaults
+  database: linkguru_test
+
+production:
+  <<: *defaults
+  database: linkguru_production
