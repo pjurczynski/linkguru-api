@@ -1,2 +1,1 @@
-linkguru-api
-============
+# Linkguru backend
