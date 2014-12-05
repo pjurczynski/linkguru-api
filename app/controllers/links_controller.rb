@@ -1,6 +1,6 @@
 class LinksController < ApplicationController
   def index
-    @links = Link.all
+    @links = requested_links(params[:timestamp])
 
     render json: @links
   end
@@ -42,5 +42,22 @@ class LinksController < ApplicationController
 
   def link_params
     params.require(:link).permit(:description, :url)
+  end
+
+  def requested_links(timestamp_string)
+    if timestamp_string.present? && valid_timestamp?(timestamp_string)
+      Link.where('updated_at > ?', timestamp_string)
+    else
+      Link.all
+    end
+  end
+
+  def valid_timestamp?(timestamp_string)
+    begin
+      DateTime.parse(timestamp_string)
+    rescue ArgumentError
+      return false
+    end
+    true
   end
 end
