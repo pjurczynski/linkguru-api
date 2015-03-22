@@ -6,8 +6,8 @@ addons:
   postgresql: '9.3'
 
 before_script:
-- cp config/database.yml.sample config/database.yml
-- psql -c 'create database linkguru_test;' -U linkguru
+- cp config/database.yml.travis config/database.yml
+- psql -c 'create database travis_ci_test;' -U postgres
 
 deploy:
   provider: heroku
