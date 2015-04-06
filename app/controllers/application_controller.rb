@@ -21,6 +21,10 @@ class ApplicationController < ActionController::API
 
   protected
 
+  def current_user
+    User.find_by_token(request.headers['HTTP_TOKEN'])
+  end
+
   def serializer_scope
     SerializserScope.new(current_user)
   end
