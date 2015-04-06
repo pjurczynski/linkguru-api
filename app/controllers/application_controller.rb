@@ -19,6 +19,10 @@ class ApplicationController < ActionController::API
     { root: false }
   end
 
+  def authenticate!
+    respond_with json: { error: :untathorized }, status: :unathorized if current_user.nil?
+  end
+
   protected
 
   def current_user
