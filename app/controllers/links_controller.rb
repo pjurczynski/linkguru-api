@@ -1,34 +1,21 @@
 class LinksController < ApplicationController
+  before_action :authenticate!
+
   def index
-    @links = requested_links(params[:timestamp])
-
-    render json: @links
-  end
-
-  def show
-    @link = Link.find(params[:id])
-
-    render json: @link
+    links = requested_links(params[:timestamp])
+    respond_with links, each_serializer: LinkSerializer
   end
 
   def create
-    @link = Link.new(link_params)
-
-    if @link.save
-      render json: @link, status: :created, location: @link
-    else
-      render json: @link.errors, status: :unprocessable_entity
-    end
+    link = Link.new(link_params)
+    link.user = current_user
+    link.save
+    respond_with link, serializer: LinkSerializer
   end
 
   def update
-    @link = Link.find(params[:id])
-
-    if @link.update(link_params)
-      head :no_content
-    else
-      render json: @link.errors, status: :unprocessable_entity
-    end
+    link.update(link_params)
+    respond_with link, serializer: LinkSerializer
   end
 
   def destroy
@@ -38,10 +25,25 @@ class LinksController < ApplicationController
     head :no_content
   end
 
+  def upvote
+    link.upvote_by(current_user)
+    respond_with link, serializer: LinkSerializer, location: false
+  end
+
+  def downvote
+    link.downvote_by(current_user)
+    respond_with link, serializer: LinkSerializer, location: false
+  end
+
   private
 
+
+  def link
+    link = Link.find(params[:link_id])
+  end
+
   def link_params
-    params.require(:link).permit(:description, :url)
+    params.require(:link).permit(:description, :url, tag_list: [])
   end
 
   def requested_links(timestamp_string)

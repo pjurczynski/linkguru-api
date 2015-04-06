@@ -26,7 +26,7 @@ class ApplicationController < ActionController::API
   protected
 
   def current_user
-    User.find_by_token(request.headers['HTTP_TOKEN'])
+    User.logged.find_by_token(request.headers['HTTP_TOKEN'])
   end
 
   def serializer_scope
