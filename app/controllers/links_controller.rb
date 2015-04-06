@@ -10,7 +10,7 @@ class LinksController < ApplicationController
     link = Link.new(link_params)
     link.user = current_user
     link.save
-    respond_with link, serializer: LinkSerializer
+    respond_with link, serializer: LinkSerializer, location: false
   end
 
   def update
