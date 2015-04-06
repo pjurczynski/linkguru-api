@@ -25,6 +25,16 @@ class LinksController < ApplicationController
     head :no_content
   end
 
+  def upvote
+    link.upvote_by(current_user)
+    respond_with link, serializer: LinkSerializer, location: false
+  end
+
+  def downvote
+    link.downvote_by(current_user)
+    respond_with link, serializer: LinkSerializer, location: false
+  end
+
   private
 
 
