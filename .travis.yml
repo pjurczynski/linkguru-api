@@ -14,3 +14,5 @@ deploy:
   api_key:
     secure: AaCDEfp2GVusMS72rHFK8O7Zu7NjAB+G/p8rES/qwHzB68pk+DvalBSJQGwLT/+nsqKpG/2iIlGlS3cEX7aYK6Gvkp7YS9DzKvjgySmpA+6D9zt0N/l/nNFrYZRPAcF8mREY/rZRmdtGRaO/8mDVoYrs/rX/FsAEPSnJNL/zHLE=
   app: linkguru-api
+  run:
+    - 'rake db:migrate'
