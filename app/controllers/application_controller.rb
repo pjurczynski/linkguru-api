@@ -23,7 +23,7 @@ class ApplicationController < ActionController::API
   end
 
   def authenticate!
-    respond_with json: { error: :untathorized }, status: :unathorized if current_user.nil?
+    respond_with json: { error: :unauthorized }, status: :unauthorized if current_user.nil?
   end
 
   protected
