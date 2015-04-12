@@ -1,3 +1,5 @@
+require 'application_responder'
+
 class SerializserScope
   attr_reader :current_user
 
@@ -8,11 +10,12 @@ end
 
 class ApplicationController < ActionController::API
   include ActionController::Serialization
-  include ActionController::MimeResponds
   include ActionController::ImplicitRender
+  include ActionController::RespondWith
 
   serialization_scope :serializer_scope
 
+  self.responder = ApplicationResponder
   respond_to :json
 
   def default_serializer_options
