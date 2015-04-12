@@ -1,6 +1,6 @@
 require 'application_responder'
 
-class SerializserScope
+class SerializerScope
   attr_reader :current_user
 
   def initialize(current_user)
@@ -33,6 +33,6 @@ class ApplicationController < ActionController::API
   end
 
   def serializer_scope
-    SerializserScope.new(current_user)
+    SerializerScope.new(current_user)
   end
 end
