@@ -39,7 +39,7 @@ class LinksController < ApplicationController
 
 
   def link
-    link = Link.find(params[:link_id])
+    link = Link.find(params[:link_id] || params[:id])
   end
 
   def link_params
