@@ -1,5 +1,5 @@
 class LinkSerializer < ActiveModel::Serializer
-  attributes :id, :description, :url, :tag_list, :score, :upVoted, :downVoted, :owned
+  attributes :id, :description, :url, :tag_list, :score, :upVoted, :downVoted, :owned, :created_at
   delegate :current_user, to: :scope
 
   has_one :user, serializer: UserSerializer, key: :owner
