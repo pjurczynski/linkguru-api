@@ -10,6 +10,7 @@ class LinksController < ApplicationController
     link = Link.new(link_params)
     link.user = current_user
     link.save
+    Notifications::Slack::Link.new(link).call
     respond_with link, serializer: LinkSerializer, location: false
   end
 
@@ -39,7 +40,7 @@ class LinksController < ApplicationController
 
 
   def link
-    link = Link.find(params[:link_id] || params[:id])
+    @link ||= Link.find(params[:link_id] || params[:id])
   end
 
   def link_params
