@@ -18,14 +18,14 @@ module Slack
 
     def last_upvote
       return unless upvote_keyword?
-      link = Link.last
+      link = Link.first
       link.upvote_by(current_slack_user)
       Notifications::Slack::Upvote.new(link).call
     end
 
     def last_downvote
       return unless downvote_keyword?
-      link = Link.last
+      link = Link.first
       link.downvote_by(current_slack_user)
       Notifications::Slack::Downvote.new(link).call
     end
