@@ -2,7 +2,9 @@ require 'google/api_client'
 require 'google/api_client/client_secrets'
 
 class GoogleOauthAuthorizer
-  def call
+  attr_reader :email, :display_name, :domain
+
+  def initialize(params)
     authorization.code = params[:code]
     authorization.fetch_access_token!
     client.authorization = authorization
@@ -10,7 +12,9 @@ class GoogleOauthAuthorizer
     plus = client.discovered_api('plus', 'v1')
     response = client.execute!(plus.people.get, userId: 'me')
 
-    extract_email(JSON.parse(response.body))
+    @email = extract_email(JSON.parse(response.body))
+    @display_name = response.body['displayName']
+    @domain = email.split('@').last
   end
 
   private
