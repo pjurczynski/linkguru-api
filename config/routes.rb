@@ -6,6 +6,10 @@ Rails.application.routes.draw do
 
   namespace 'slack' do
     resources :links, only: :create do
+      collection do
+        post :last_upvote
+        post :last_downvote
+      end
     end
   end
 
