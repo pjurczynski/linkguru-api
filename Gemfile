@@ -10,6 +10,7 @@ gem 'acts_as_votable'
 gem 'pg'
 gem 'google-api-client'
 gem 'slack-notifier'
+gem 'ngnews-ruby', github: 'netguru/ngnews-ruby', require: 'ngnews'
 
 group :development do
   gem 'better_errors'
@@ -27,3 +28,5 @@ end
 group :test do
   gem 'webmock'
 end
+
+gem 'dotenv-rails', :groups => [:development, :test]

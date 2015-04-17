@@ -10,7 +10,10 @@ class LinksController < ApplicationController
     link = Link.new(link_params)
     link.user = current_user
     link.save
-    Notifications::Slack::Link.new(link).call
+    if link.valid?
+      Notifications::Slack::Link.new(link).call
+      Ngnews::Client.publish! "new link #{link.url} added. Details: #{link.description}", 'link'
+    end
     respond_with link, serializer: LinkSerializer, location: false
   end
 
