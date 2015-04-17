@@ -1,9 +1,8 @@
 class SessionsController < ApplicationController
   def create
-    email = GoogleOauthAuthorizer.new.call
-    domain = email.split('@').last
-    if allowed_domains.include?(domain)
-      user = User.where(email: email).first_or_create(name: body['displayName'])
+    g_user = GoogleOauthAuthorizer.new(params)
+    if allowed_domains.include?(g_user.domain)
+      user = User.where(email: g_user.email).first_or_create(name: g_user.display_name)
       user.generate_token!
       respond_with user, serializer: UserSerializer, location: false
     else
