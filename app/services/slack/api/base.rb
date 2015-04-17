@@ -9,7 +9,7 @@ module Slack::API
       def post
         req = Net::HTTP::Post.new URI(uri).request_uri
         req.set_form_data(
-          Hash(params).merge(token: Rails.application.secrets.slack_token)
+          Hash(params).merge(token: Rails.application.secrets.slack_read_token)
         )
 
         http(uri).request req

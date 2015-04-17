@@ -11,7 +11,7 @@ class SlackController < ActionController::API
   end
 
   def token_valid?
-    params[:token] == Rails.application.secrets.slack_token
+    params[:token] == Rails.application.secrets.slack_outgoing_token
   end
 
   def trigger_word_valid?
