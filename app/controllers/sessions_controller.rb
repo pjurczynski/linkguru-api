@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
       user.generate_token!
       respond_with user, serializer: UserSerializer, location: false
     else
-      respond_with json: { error: true }, status: :unathorized
+      render json: { body: 'You need to be in .netguru.co/pl domain to access this app.' }, status: :forbidden, location: nil
     end
   end
 
@@ -19,6 +19,6 @@ class SessionsController < ApplicationController
   private
 
   def allowed_domains
-    %w(gmail.com netguru.co netguru.pl)
+    %w(netguru.co netguru.pl)
   end
 end
