@@ -15,7 +15,18 @@ class SessionsController < ApplicationController
     respond_with json: { sucess: true }
   end
 
+  def refresh
+    return refresh_error if current_user.nil?
+    current_user.generate_token!
+    current_user.reload
+    respond_with current_user, serializer: UserSerializer, location: false
+  end
+
   private
+
+  def refresh_error
+    render json: { error: true }, status: :unauthorized, location: nil
+  end
 
   def allowed_domains
     %w(netguru.co netguru.pl)

@@ -20,13 +20,13 @@ class ApplicationController < ActionController::API
   end
 
   def authenticate!
-    respond_with json: { error: :untathorized }, status: :unathorized if current_user.nil?
+    (respond_with json: { error: :untathorized }, status: :unauthorized) if current_user.nil?
   end
 
   protected
 
   def current_user
-    User.logged.find_by_token(request.headers['HTTP_TOKEN'])
+    @current_user ||= User.logged.find_by_token(request.headers['HTTP_TOKEN'])
   end
 
   def serializer_scope
