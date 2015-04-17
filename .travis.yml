@@ -1,18 +1,17 @@
 language: ruby
 rvm:
 - 2.2.0
-
 addons:
   postgresql: '9.3'
-
 before_script:
 - cp config/database.yml.travis config/database.yml
 - psql -c 'create database travis_ci_test;' -U postgres
-
 deploy:
   provider: heroku
   api_key:
-    secure: AaCDEfp2GVusMS72rHFK8O7Zu7NjAB+G/p8rES/qwHzB68pk+DvalBSJQGwLT/+nsqKpG/2iIlGlS3cEX7aYK6Gvkp7YS9DzKvjgySmpA+6D9zt0N/l/nNFrYZRPAcF8mREY/rZRmdtGRaO/8mDVoYrs/rX/FsAEPSnJNL/zHLE=
-  app: linkguru-api
+    secure: Xc9eMbDUo1krcCDcKEIm3d6wiQ75JCxyhiqEyjsxRV+7Gf7cHH4vByyrGheU7C+2/+LHPTKq05GM6fta2wZTj3NOQVm2TsUph+OFhzH5n2/t2CFxqzSiGkjl5NaBX7HUNjpO6JXJbHwjLOU+1EP1yKO1hCKcTylTVyM1bnZLNvw=
+  app:
+    master: linkguru-api-staging
+    production: linkguru-api
   run:
-    - 'rake db:migrate'
+  - rake db:migrate
