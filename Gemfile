@@ -27,6 +27,7 @@ end
 
 group :test do
   gem 'webmock'
+  gem 'database_cleaner'
 end
 
 gem 'dotenv-rails', :groups => [:development, :test]
