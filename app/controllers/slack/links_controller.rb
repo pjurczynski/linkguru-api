@@ -3,7 +3,7 @@ module Slack
     before_action :authenticate_slack!
 
     def create
-      return unless create_keyword?
+      return unless trigger_word.create?
       link = Link.new(link_params)
       link.user = current_slack_user
       if link.save
@@ -17,14 +17,14 @@ module Slack
     end
 
     def last_upvote
-      return unless upvote_keyword?
+      return unless trigger_word.upvote?
       link = Link.first
       link.upvote_by(current_slack_user)
       Notifications::Slack::Upvote.new(link).call
     end
 
     def last_downvote
-      return unless downvote_keyword?
+      return unless trigger_word.downvote?
       link = Link.first
       link.downvote_by(current_slack_user)
       Notifications::Slack::Downvote.new(link).call
@@ -44,20 +44,8 @@ module Slack
       @parsed_link ||= Parsers::Link.new(params.require(:text))
     end
 
-    def keywords_regex
-      '(?:add link|linkguru)'
-    end
-
-    def create_keyword?
-      Regexp.new(keywords_regex).match(params[:trigger_word]).present?
-    end
-
-    def upvote_keyword?
-      params[:trigger_word] == 'upvote'
-    end
-
-    def downvote_keyword?
-      params[:trigger_word] == 'downvote'
+    def trigger_word
+      Parsers::TriggerWord.new(params.require(:trigger_word))
     end
   end
 end
