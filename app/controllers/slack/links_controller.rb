@@ -34,27 +34,14 @@ module Slack
 
     def link_params
       {
-        url: parsed_link,
-        description: parsed_description,
-        tag_list: parsed_tag_list,
+        url: parsed_link.url,
+        description: parsed_link.description,
+        tag_list: parsed_link.tag_list,
       }
     end
 
     def parsed_link
-      text = params.fetch(:text)
-      matched = /#{keywords_regex} <(?<url>[^>]*)>/.match(text)
-      matched[:url] if matched.present?
-    end
-
-    def parsed_description
-      text = params.fetch(:text)
-      matched = /#{keywords_regex} <[^>]*> (?<description>)[^#]*/.match(text)
-      matched[:description] if matched.present?
-    end
-
-    def parsed_tag_list
-      text = params.fetch(:text)
-      text.scan(/(<?#\S*>?)/)
+      @parsed_link ||= Parsers::Link.new(params.require(:text))
     end
 
     def keywords_regex
