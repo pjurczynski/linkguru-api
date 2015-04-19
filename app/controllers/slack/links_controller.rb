@@ -6,12 +6,10 @@ module Slack
       return unless trigger_word.create?
       link = Link.new(link_params)
       link.user = current_slack_user
-      if link.save
-        message = "You're gorgeous! We love new links omnomnom!
-          You can now `downvote` or `upvote` that link!"
+      message = if link.save
+        I18n.t('slack.links.create_success')
       else
-        message = "Go to LinkGuru and fix some bugs.. \
-                   because I couldn't create that link ;(."
+        I18n.t('slack.links.create_failed')
       end
       render json: { text: message }
     end
