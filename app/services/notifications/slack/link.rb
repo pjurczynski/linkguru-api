@@ -15,10 +15,12 @@ module Notifications::Slack
     private
 
     def message
-      "A new link has been added!
-      link: #{create_link(link.url, link.url)}
-      description: #{link.description}
-      tags: #{link.tags.join(',')}"
+      I18n.t(
+        'slack.notifications.create',
+        url: create_link(link.url, link.url),
+        description: link.description,
+        tags: link.tags.join(', ')
+      )
     end
 
     def create_link(name, url)

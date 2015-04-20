@@ -15,7 +15,11 @@ module Notifications::Slack
     private
 
     def message
-      "total votes: #{link.votes_for.size}, for #{link.url}"
+      I18n.t(
+        'slack.notifications.upvote',
+        votes_count: link.votes_for.size,
+        url: link.url
+      )
     end
   end
 end

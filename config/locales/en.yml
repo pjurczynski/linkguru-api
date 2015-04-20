@@ -3,3 +3,11 @@ en:
     links:
       create_success: "You're gorgeous! We love new links omnomnom!\n  You can now `downvote` or `upvote` that link!"
       create_failed: "Go to LinkGuru and fix some bugs.. \nbecause I couldn't create that link ;(."
+
+    notifications:
+      upvote: "total votes: %{votes_count}, for %{url}"
+      downvote: "total votes: %{votes_count}, for %{url}"
+      create: "A new link has been added!\n
+                link: %{url}\n
+                description: %{description}\n
+                tags: %{tags}"
