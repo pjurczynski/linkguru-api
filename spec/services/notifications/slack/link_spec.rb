@@ -1,26 +1,34 @@
-require 'rails_helper'
-
-module Notifications::Slack
+module Parsers
   describe Link do
-    let(:user) { build(:user) }
-    let(:link) { build(:link, user: user) }
+    let(:body) { 'add link <http://something.co> some description #tag <#tag2>' }
+    subject { described_class.new(body) }
 
-    subject { described_class.new(link) }
+    it { expect(subject.url).to eq 'http://something.co' }
+    it { expect(subject.description).to eq 'some description' }
+    it { expect(subject.tag_list).to match_array [['tag'], ['<#tag2>']] }
 
-    it 'slack responds with OK' do
-      expect(subject.call.code).to eq '200'
+    context 'with two normal tags' do
+      let(:body) { 'add link <http://something.co> some description #tag #tag2' }
+
+      it { expect(subject.url).to eq 'http://something.co' }
+      it { expect(subject.description).to eq 'some description' }
+      it { expect(subject.tag_list).to match_array [['tag'], ['tag2']] }
     end
 
-    context 'stubbed api calls' do
-      before do
-        stub_request(:post, Rails.application.secrets.slack_webhook)
-        allow(subject).to receive(:send_message).and_call_original
-      end
+    context 'with two special tags' do
+      let(:body) { 'add link <http://something.co> some description <#tag> <#tag2>' }
 
-      it 'includes a link' do
-        subject.call
-        expect(subject).to have_received(:send_message).with(/#{link.url}/)
-      end
+      it { expect(subject.url).to eq 'http://something.co' }
+      it { expect(subject.description).to eq 'some description' }
+      it { expect(subject.tag_list).to match_array [['<#tag>'], ['<#tag2>']] }
+    end
+
+    context 'no description has been passed' do
+      let(:body) { 'add link <http://something.co> #tag <#tag2>' }
+
+      it { expect(subject.url).to eq 'http://something.co' }
+      it { expect(subject.description).to eq '** no description appended **' }
+      it { expect(subject.tag_list).to match_array [['tag'], ['<#tag2>']] }
     end
   end
 end
