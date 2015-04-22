@@ -15,3 +15,9 @@ deploy:
     production: linkguru-api
   run:
   - rake db:migrate
+env:
+  global:
+  - secure: IIYsx7HdITD9orLunCC64lULfxu63HgTXVeVDWovHHxp9fZoj0B+SBehBmF5RaKcn7FyxAvMjMjNkwRsmBaTemuzuSNG/peY3K1TXSLrKzCioCs8aPOKfekL9wZ+8nJFaCB6GBK8W8xPcEA8uPoIrUicZdumsciODfbOX76KFw0=
+  - secure: fmWcgdPVv9lbgf2k21L0xOr8lDXTyeJCCQGQTwFfvd65i+RoLarguDzd7xWjIm1GL+O6ryF3MYHHbVR/A5VMMUT9qHzMkKr5BY0i3o6YKvqCMttSip9qIqeLHSAJ272ejbKU617E+7huucRGBhzU01bArB9FPqmrhLaJd9cfiHc=
+dd:
+  secure: a3bYKzU8rWzqPdVmOPcp5XHAX7ksxVZtYk3pzDtzyx3ShVnCIfeB32tj6UNYXjGXaYWBWaWTT6mD6kvk4Gnh4vJ0ka6P89aBIIg6jRyCIpsEztPGRSvAlvrMUX6wz9EFVHVm1RQPw5n3WPMVkmkRiZoW+sIJt9+UUvAxGhSUA1o=
