@@ -19,7 +19,7 @@ module Slack
       end
 
       subject { post :create, params }
-      it { expect{ Link.count }.to change{ Link.count }.by(1) }
+      it { expect{ subject }.to change{ Link.count }.by(1) }
       xit { expect{ subject }.to change{ Link.first.url }.to('http://something.co') }
       xit { expect{ subject }.to change{ Link.first.tags.count }.to(2) }
       xit { expect{ subject }.to change{ Link.first.tags.pluck(:name) }.to(%w[tag2 tag]) }
