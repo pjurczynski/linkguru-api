@@ -18,14 +18,14 @@ module Slack
         )
       end
 
-      subject { post :create, params }
-      it { expect{ subject }.to change{ Link.count }.by(1) }
-      xit { expect{ subject }.to change{ Link.first.url }.to('http://something.co') }
-      xit { expect{ subject }.to change{ Link.first.tags.count }.to(2) }
-      xit { expect{ subject }.to change{ Link.first.tags.pluck(:name) }.to(%w[tag2 tag]) }
+      before{ post :create, params }
+
+      it { expect(Link.first.url).to eq('http://something.co') }
+      it { expect(Link.first.tags.count).to eq(2) }
+      it { expect(Link.first.tags.pluck(:name)).to eq(%w[tag2 tag]) }
       it "returns success message in json" do
-        expect(subject.body)
-          .to eq({ text: I18n.t('slack.links.create_success') }.to_json)
+        expect(json)
+          .to eq({ 'text' => I18n.t('slack.links.create_success') })
       end
 
       context "Link couldn't be saved" do
@@ -39,8 +39,8 @@ module Slack
         end
 
         it "returns failing message in json" do
-          expect(subject.body)
-            .to eq({ text: I18n.t('slack.links.create_failed') }.to_json)
+          expect(json)
+            .to eq({ 'text' => I18n.t('slack.links.create_failed') })
         end
       end
     end
