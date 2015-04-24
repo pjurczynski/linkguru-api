@@ -1,4 +1,8 @@
 class SlackController < ActionController::API
+  rescue_from StandardError do
+    render json: { text: I18n.t('status.total_failure') }
+  end
+
   def authenticate_slack!
     unless slack_user_authenticated?
       render json: { text: I18n.t('status.unauthorized') }

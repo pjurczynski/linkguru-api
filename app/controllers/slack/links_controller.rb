@@ -9,7 +9,7 @@ module Slack
       message = if link.save
         I18n.t('slack.links.create_success')
       else
-        I18n.t('slack.links.create_failed')
+        I18n.t('slack.links.create_failed', errors: link.errors.full_messages.join(', '))
       end
       render json: { text: message }
     end

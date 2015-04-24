@@ -40,7 +40,7 @@ module Slack
 
         it "returns failing message in json" do
           expect(json)
-            .to eq({ 'text' => I18n.t('slack.links.create_failed') })
+            .to eq({ 'text' => I18n.t('slack.links.create_failed', errors: "Url can't be blank") })
         end
       end
     end
