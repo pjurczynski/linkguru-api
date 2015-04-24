@@ -1,6 +1,10 @@
 FactoryGirl.define do
+  sequence :url do |n|
+    "http://some#{n}.example.com"
+  end
+
   factory :link do
-    url { 'http://some.example.com' }
+    url
     user
   end
 end
