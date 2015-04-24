@@ -11,3 +11,5 @@ en:
                 link: %{url}\n
                 description: %{description}\n
                 tags: %{tags}"
+  status:
+    unauthorized: "Unauthorized: go to a web page to register a new account"

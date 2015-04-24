@@ -1,5 +1,11 @@
 class SlackController < ActionController::API
   def authenticate_slack!
+    unless slack_user_authenticated?
+      render json: { text: I18n.t('status.unauthorized') }
+    end
+  end
+
+  def slack_user_authenticated?
     current_slack_user.present? && token_valid? && trigger_word_valid?
   end
 
