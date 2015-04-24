@@ -31,3 +31,4 @@ group :test do
 end
 
 gem 'dotenv-rails', :groups => [:development, :test]
+gem 'rails_12factor', group: :production
